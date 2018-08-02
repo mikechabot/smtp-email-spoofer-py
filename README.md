@@ -2,6 +2,7 @@
 Python 3.x based email spoofer 
 
 1. `git clone https://github.com/mikechabot/email-spoofer-py.git`
+3. Activate `virtualenv`
 2. `pip install -r requirements.txt`
 3. `python spoof.py`
 
