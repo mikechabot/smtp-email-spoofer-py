@@ -1,2 +1,2 @@
-# email-spoofer-py
-Simple Python script to spoof emails 
+# smtp-spoofer
+Simple Python script to spoof emails
