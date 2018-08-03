@@ -17,3 +17,6 @@ def success(line):
 def error(line):
     print(Fore.LIGHTRED_EX + line + Style.RESET_ALL)
 
+
+def bright(line):
+    print(Fore.LIGHTMAGENTA_EX + line + Style.RESET_ALL)

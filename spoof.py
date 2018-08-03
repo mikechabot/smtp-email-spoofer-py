@@ -1,71 +1,41 @@
-import smtplib
-from scripts import get_raw as r, smtp as s, util as u, pretty_print as p
+import os
+import sys
 
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+# Append the scripts package to PYTHONPATH
+base_dir = os.path.dirname(__file__) or '.'
+scripts_package = os.path.join(base_dir, 'scripts')
+sys.path.insert(0, scripts_package)
 
-p.header('==================================================')
-p.header('  email-spoofer-py v0.0.2                         ')
-p.header('  Python 3.x based email spoofer                  ')
-p.header('  https://github.com/mikechabot/email-spoofer-py  ')
-p.header('==================================================')
+from scripts import *
 
-smtp_host = u.get_required_prompt('\nSMTP host: ')
-smtp_port = r.get_port()
+header('==================================================')
+header('  email-spoofer-py v0.0.2                         ')
+header('  Python 3.x based email spoofer                  ')
+header('  https://github.com/mikechabot/email-spoofer-py  ')
+header('==================================================')
 
-server = s.connect(smtp_host, smtp_port)
+smtp_host = get_host()
+smtp_port = get_port()
 
-s.start_tls(server)
-s.evaluate_server(server)
-s.login(server)
+smtp = SMTPConnection(smtp_host, smtp_port) # Connect to SMTP over TLS
 
-from_address = r.get_from_address()
-from_name = r.get_from_name()
-to_addresses = r.get_to_addresses()
-subject = r.get_subject()
+success = False
+while not success:
+    username = get_username()
+    password = get_password()
+    success = smtp.login(username, password)  # Attempt login
 
-msg = MIMEMultipart('alternative')
-msg.set_charset("utf-8")
+sender = get_sender_address()
+name = get_sender_name()
+recipients = get_recipient_addresses()
+subject = get_subject()
+message_html = get_message_body()
 
-msg["From"] = from_name + "<" + from_address + ">"
-msg['Subject'] = subject
-msg["To"] = u.COMMASPACE.join(to_addresses)
+message = smtp.compose_message(sender, name, recipients, subject, message_html) # Compose MIME message
 
-load_body_from_file = r.load_body_from_file()
+bright('\n===================================================================\n')
+header(message.as_string())
+bright('\n===================================================================\n')
 
-if load_body_from_file:
-    filename = r.get_body_filename()
-    with open(filename) as file:
-        body = MIMEText(file.read(), 'html')
-        msg.attach(body)
-else:
-    p.info(' > Enter HTML line by line')
-    p.info(' > To finish, press CTRL+D (*nix) or CTRL-Z (win) on an *empty* line')
-    html = u.EMPTY_STRING
-    while True:
-        try:
-            line = input(' | ')
-            html += line + '\n'
-        except EOFError:
-            p.success(' > HTML captured.')
-            break
-    body = MIMEText(html, 'html')
-    msg.attach(body)
-
-p.info(' > Send from ' + from_address + ' as ' + from_name)
-p.info(' > Send to ' + u.COMMASPACE.join(to_addresses))
-
-if r.do_send_mail():
-    try:
-        p.info(' > Sending spoofed message...')
-        server.sendmail(from_address, to_addresses, msg.as_string())
-        p.success(' > Successfully sent message!')
-    except smtplib.SMTPException:
-        p.error(' > Error: Unable to send message. Check TO/FROM and Message body')
-else:
-    p.info(' > Send message cancelled')
-
-
-
-
-
+if do_send_mail():
+    smtp.send_mail(message)
