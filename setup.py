@@ -1,7 +1,7 @@
 import os
 import sys
 
-folders = ['commands', 'config', 'models', 'utils']
+folders = ['args', 'commands', 'models', 'utils']
 
 def init():
     base_dir = os.path.dirname(__file__) or '.'
