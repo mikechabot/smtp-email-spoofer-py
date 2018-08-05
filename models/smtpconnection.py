@@ -1,15 +1,10 @@
 import smtplib
+import logger
 from socket import gaierror
-from logger import info, success, error
-from constants import \
-    SOCKET_ERROR, STARTTLS, TLS_NOT_SUPPORTED, \
-    TLS_NOT_AVAILABLE, INVALID_HELO_REPLY, NO_SMTP_FEATURES, \
-    NO_AUTH_FEATURES, NO_PLAIN_OR_LOGIN_FEATURE, SUPPORTED_AUTH_TYPES, \
-    INVALID_CREDENTIALS, AUTH_NOT_SUPPORTED, GENERIC_AUTHENTICATION_EXCEPTION, \
-    UNABLE_TO_SEND_MESSAGE, COMMASPACE
-
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+COMMASPACE = ', '
 
 class SMTPConnection:
     def __init__(self, host, port):
@@ -51,71 +46,61 @@ class SMTPConnection:
     def __ehlo(self):
         try:
             self.server.ehlo()
+            if not self.server.does_esmtp:
+                logger.error('The server does not support ESMTP')
+                exit(1)
         except smtplib.SMTPHeloError:
-            error(INVALID_HELO_REPLY)
+            logger.error('The server did not reply properly to the EHLO/HELO greeting.')
             exit(1)
 
     def __connect(self):
         try:
-            info('Connecting to SMTP socket (' + self.socket + ')...')
+            logger.info('Connecting to SMTP socket (' + self.socket + ')...')
             self._server = smtplib.SMTP(self.host, self.port)
-            success('Connected to SMTP server')
+            logger.success('Connected to SMTP server')
         except (gaierror, OSError):
-            error(SOCKET_ERROR)
+            logger.error('Unable to establish connection to SMTP socket.')
             exit(1)
 
     def __start_tls(self):
         self.__ehlo()
-        if not self.server.has_extn(STARTTLS):
-            error(TLS_NOT_SUPPORTED)
+        if not self.server.has_extn('starttls'):
+            logger.error('SMTP server does not support TLS.')
             exit(1)
         else:
             try:
-                info('Starting TLS session...')
+                logger.info('Starting TLS session...')
                 self.server.starttls()
-                success('Started TLS session')
+                logger.success('Started TLS session')
             except RuntimeError:
-                error(TLS_NOT_AVAILABLE)
+                logger.error('SSL/TLS support is not available to your Python interpreter.')
                 exit(1)
 
     def __eval_server_features(self):
         self.__ehlo()
-        features = self.server.esmtp_features;
 
-        # Verify server features
-        if not features:
-            error(NO_SMTP_FEATURES)
+        if not self.server.has_extn('auth'):
+            logger.error('No AUTH types detected.')
             exit(1)
 
-        # Verify auth feature
-        auth_features = features['auth']
-        if not auth_features:
-            error(NO_AUTH_FEATURES)
-            exit(1)
+        server_auth_features = self.server.esmtp_features.get('auth').strip().split()
+        support_auth_features = { auth_type for auth_type in {'PLAIN', 'LOGIN'} if auth_type in server_auth_features }
 
-        # Verify auth types
-        auth_types = []
-        for auth_type in SUPPORTED_AUTH_TYPES:
-            if auth_type in auth_features.strip().split():
-                auth_types.append(auth_type)
-
-        if not auth_types:
-            error(NO_PLAIN_OR_LOGIN_FEATURE)
+        if not support_auth_features:
+            logger.error('SMTP server does not support AUTH PLAIN or AUTH LOGIN.')
             exit(1)
 
     def login(self, username, password):
         try:
-            self.server.login(username, password)
-            success('Authentication successful')
-            return True
+            return self.server.login(username, password)
         except smtplib.SMTPAuthenticationError:
-            error(INVALID_CREDENTIALS)
+            logger.error('The server did not accept the username/password combination.')
             return False
         except smtplib.SMTPNotSupportedError:
-            error(AUTH_NOT_SUPPORTED)
+            logger.error('The AUTH command is not supported by the server.')
             exit(1)
         except smtplib.SMTPException:
-            error(GENERIC_AUTHENTICATION_EXCEPTION)
+            logger.error('Encountered an error during authentication.')
             exit(1)
 
     def compose_message(self, sender, name, recipients, subject, html):
@@ -135,9 +120,9 @@ class SMTPConnection:
 
     def send_mail(self, message):
         try:
-            info('Sending spoofed message...')
+            logger.info('Sending spoofed message...')
             self.server.sendmail(self.sender, self.recipients, message.as_string())
-            success('Sent message')
+            logger.success('Sent message')
         except smtplib.SMTPException:
-            error(UNABLE_TO_SEND_MESSAGE)
+            logger.error('Unable to send message. Check sender, recipients and message body')
             exit(1)

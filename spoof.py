@@ -1,41 +1,25 @@
-import os
 import sys
+from setup import init
 
-# Append the scripts package to PYTHONPATH
-base_dir = os.path.dirname(__file__) or '.'
-scripts_package = os.path.join(base_dir, 'scripts')
-sys.path.insert(0, scripts_package)
+init()
 
-from scripts import *
+from config import args
+from commands import cli, wizard
 
-header('==================================================')
-header('  email-spoofer-py v0.0.2                         ')
-header('  Python 3.x based email spoofer                  ')
-header('  https://github.com/mikechabot/email-spoofer-py  ')
-header('==================================================')
-
-smtp_host = get_host()
-smtp_port = get_port()
-
-smtp = SMTPConnection(smtp_host, smtp_port) # Connect to SMTP over TLS
-
-success = False
-while not success:
-    username = get_username()
-    password = get_password()
-    success = smtp.login(username, password)  # Attempt login
-
-sender = get_sender_address()
-name = get_sender_name()
-recipients = get_recipient_addresses()
-subject = get_subject()
-message_html = get_message_body()
-
-message = smtp.compose_message(sender, name, recipients, subject, message_html) # Compose MIME message
-
-bright('\n===================================================================\n')
-header(message.as_string())
-bright('\n===================================================================\n')
-
-if do_send_mail():
-    smtp.send_mail(message)
+if __name__ == '__main__':
+    arg_length = len(sys.argv)
+    if arg_length == 1:
+        args.parser.print_help()
+        exit(1)
+    elif arg_length == 2:
+        if 'wizard' in sys.argv:
+            wizard.run()
+        elif 'cli' in sys.argv:
+            args.cli.print_help()
+            exit(1)
+        else:
+            args.parser.parse_args() # generate parser warning messages
+    else:
+        args = args.parser.parse_args()
+        print(args)
+        cli.run(args)
