@@ -105,6 +105,8 @@ required arguments:
 
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-cli.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-cli' />
 
+----
+
 ## Result
 
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-result.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-result' />
