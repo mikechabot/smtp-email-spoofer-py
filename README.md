@@ -41,6 +41,8 @@ commands:
     cli         Pass arguments directly
 ```    
 
+----
+
 ### <a id="wizard">Wizard</a>
 
 Issue the `wizard` command to use the step-by-step wizard:
@@ -66,6 +68,8 @@ $ py spoof.py wizard
 4. Send the message:
 
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-send.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-send' />
+
+----
 
 ### <a id="cli">CLI</a>
 
