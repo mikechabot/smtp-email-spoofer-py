@@ -82,9 +82,9 @@ class SMTPConnection:
             exit(1)
 
         server_auth_features = self.server.esmtp_features.get('auth').strip().split()
-        support_auth_features = { auth_type for auth_type in {'PLAIN', 'LOGIN'} if auth_type in server_auth_features }
+        supported_auth_features = { auth_type for auth_type in {'PLAIN', 'LOGIN'} if auth_type in server_auth_features }
 
-        if not support_auth_features:
+        if not supported_auth_features:
             logger.error('SMTP server does not support AUTH PLAIN or AUTH LOGIN.')
             exit(1)
 
