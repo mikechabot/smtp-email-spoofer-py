@@ -12,7 +12,6 @@ Python 3.x based email spoofer
 - [Getting Started](#getting-started)
 - [Commands](#commands)
 - [wizard](#wizard)
-  - [Usage](#wizard-usage)
 - [CLI](#cli)
 
 ## <a id="getting-started">Getting Started</a>
@@ -43,7 +42,7 @@ commands:
 
 ## <a id="wizard">Wizard</a>
 
-To use the step-by-step wizard, issue the `wizard` command.
+Issue the `wizard` command to use the step-by-step wizard:
 
 ```
 $ py spoof.py wizard
