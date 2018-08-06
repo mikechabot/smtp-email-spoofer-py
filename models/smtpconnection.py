@@ -57,7 +57,6 @@ class SMTPConnection:
         try:
             logger.info('Connecting to SMTP socket (' + self.socket + ')...')
             self._server = smtplib.SMTP(self.host, self.port)
-            logger.success('Connected to SMTP server')
         except (gaierror, OSError):
             logger.error('Unable to establish connection to SMTP socket.')
             exit(1)
@@ -71,7 +70,6 @@ class SMTPConnection:
             try:
                 logger.info('Starting TLS session...')
                 self.server.starttls()
-                logger.success('Started TLS session')
             except RuntimeError:
                 logger.error('SSL/TLS support is not available to your Python interpreter.')
                 exit(1)
@@ -122,7 +120,7 @@ class SMTPConnection:
         try:
             logger.info('Sending spoofed message...')
             self.server.sendmail(self.sender, self.recipients, message.as_string())
-            logger.success('Sent message')
+            logger.success('Message sent!')
         except smtplib.SMTPException:
             logger.error('Unable to send message. Check sender, recipients and message body')
             exit(1)

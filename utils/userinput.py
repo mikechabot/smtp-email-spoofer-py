@@ -3,9 +3,9 @@ from colorama import Fore, Style
 from logger import info, success, error
 
 
-def __prompt(text):
+def __prompt(text, color):
     try:
-        print(Fore.WHITE, end='')
+        print(color, end='')
         return input(text).strip()
     except KeyboardInterrupt:
         error('\nInterrupt received. Exiting...')
@@ -17,12 +17,12 @@ def __prompt(text):
 def __get_required_input(text):
     var = None
     while not var:
-        var = __prompt(text)
+        var = __prompt(text, Fore.WHITE)
     return var
 
 
 def __get_optional_input(text, default_value):
-    var = __prompt(text)
+    var = __prompt(text, Fore.WHITE)
     if var:
         return var
     else:
@@ -61,11 +61,11 @@ def get_password():
 
 
 def get_sender_address():
-    return __get_required_input('Sender address (e.g. spoofed@domain.com): ')
+    return __get_required_input('Sender address: ')
 
 
 def get_sender_name():
-    return __get_required_input('Sender name (e.g. John Smith): ')
+    return __get_required_input('Sender name: ')
 
 
 def get_subject():
@@ -73,11 +73,11 @@ def get_subject():
 
 
 def get_recipient_addresses():
-    to_address = __get_required_input('Recipient address (e.g. victim@domain.com): ')
+    to_address = __get_required_input('Recipient address: ')
     to_addresses = [to_address]
     if is_multi_address():
         while to_address:
-            to_address = __get_optional_input('Recipient address (blank to continue): ', None)
+            to_address = __get_optional_input('Recipient address: ', None)
             if to_address:
                 to_addresses.append(to_address)
     return to_addresses
@@ -112,7 +112,7 @@ def get_html():
     html = ''
     while True:
         try:
-            line = input('>| ')
+            line = __prompt('>| ', Fore.LIGHTBLACK_EX)
             html += line + '\n'
         except EOFError:
             success('Captured HTML body')

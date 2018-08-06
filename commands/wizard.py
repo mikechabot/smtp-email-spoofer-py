@@ -1,16 +1,11 @@
 import logger
 import userinput as ui
+from appheader import print_header
 from smtpconnection import SMTPConnection
-
-app_description = """  email-spoofer-py v0.0.2 (CLI wizard)  
-  Python 3.x based email spoofer
-  https://github.com/mikechabot/email-spoofer-py"""
 
 
 def run():
-    logger.bright('\n{0}'.format('='*50))
-    logger.header(app_description)
-    logger.bright('{0}\n'.format('='*50))
+    print_header()
 
     # Connect to SMTP over TLS
     connection = SMTPConnection(ui.get_host(), ui.get_port())
@@ -31,10 +26,6 @@ def run():
         ui.get_subject(),
         ui.get_message_body()
     )
-
-    logger.bright('\n{0}\n'.format('='*70))
-    logger.header(message.as_string())
-    logger.bright('\n{0}\n'.format('='*70))
 
     if ui.do_send_mail():
         connection.send_mail(message)
