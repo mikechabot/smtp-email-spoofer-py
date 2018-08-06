@@ -13,7 +13,7 @@ Python 3.x based email spoofer
 - [Commands](#commands)
   - [Wizard](#wizard)
   - [CLI](#cli)
--[Result](#result)
+- [Result](#result)
 
 ## <a id="getting-started">Getting Started</a>
 
