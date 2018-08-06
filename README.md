@@ -53,16 +53,13 @@ $ py spoof.py wizard
 
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-tls-session.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-tls-session' />
 
-
 2. Optionally provide credentials to login to the SMTP server:
 
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-auth.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-auth' />
 
-
 3. Compose the forged message. Load the HTML message body from a file, or compose it within the shell:
 
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-compose-msg.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-compose-msg' />
-
 
 4. Send the message:
 
