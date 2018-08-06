@@ -13,6 +13,7 @@ Python 3.x based email spoofer
 - [Commands](#commands)
   - [Wizard](#wizard)
   - [CLI](#cli)
+-[Result](#result)
 
 ## <a id="getting-started">Getting Started</a>
 
@@ -99,3 +100,8 @@ required arguments:
 > If `--noauth` is not specified, `--username` and `--password` are required.
 
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-cli.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-cli' />
+
+## Result
+
+<img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-result.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-result' />
+
