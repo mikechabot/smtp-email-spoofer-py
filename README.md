@@ -73,7 +73,7 @@ $ py spoof.py wizard
 
 ### <a id="cli">CLI</a>
 
-Issue the `cli` to view the help:
+Issue the `cli` command to view the help:
 
 ```bash
 $ py spoof.py cli
