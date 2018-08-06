@@ -19,12 +19,9 @@ noauth_or_username.add_argument('--username', dest='username', type=str, help='S
 # Make password required if "--username" is present
 cli.add_argument('--password', dest='password', required='--username' in sys.argv, type=str, help='SMTP password (required with --username)')
 
-
 required = cli.add_argument_group('required arguments')
 required.add_argument('--host', dest='host', required=True, type=str, help='SMTP hostname')
 required.add_argument('--port', dest='port', type=int, required=True, help='SMTP port number')
-
-
 
 # Email composition arguments
 required.add_argument('--sender', dest='sender', required=True, type=str, help='Sender address (e.g. spoofed@domain.com)')
