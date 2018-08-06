@@ -11,8 +11,8 @@ Python 3.x based email spoofer
 
 - [Getting Started](#getting-started)
 - [Commands](#commands)
-- [wizard](#wizard)
-- [CLI](#cli)
+  - [Wizard](#wizard)
+  - [CLI](#cli)
 
 ## <a id="getting-started">Getting Started</a>
 
@@ -26,6 +26,7 @@ Python 3.x based email spoofer
 `email-spoofer-py` offers two global commands: [`wizard`](#wizard) and [`cli`](#cli):
 
 ```bash
+$ py spoof.py
 usage: spoof.py [-h] {wizard,cli} ...
 
 Python 3.x based email spoofer
@@ -37,10 +38,9 @@ commands:
   {wizard,cli}  Allowed commands
     wizard      Use the step-by-step wizard
     cli         Pass arguments directly
-```
-    
+```    
 
-## <a id="wizard">Wizard</a>
+### <a id="wizard">Wizard</a>
 
 Issue the `wizard` command to use the step-by-step wizard:
 
@@ -66,6 +66,4 @@ $ py spoof.py wizard
 
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-send.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-send' />
 
-### Example usage
-
-## <a id="cli">CLI</a>
+### <a id="cli">CLI</a>
