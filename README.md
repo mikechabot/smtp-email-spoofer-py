@@ -67,3 +67,35 @@ $ py spoof.py wizard
 <img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-send.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-send' />
 
 ### <a id="cli">CLI</a>
+
+Issue the `cli` to view the help:
+
+```bash
+$ py spoof.py cli
+usage: spoof.py cli [-h] (--noauth | --username USERNAME)
+                    [--password PASSWORD] --host HOST --port PORT --sender
+                    SENDER --name NAME --recipients RECIPIENTS
+                    [RECIPIENTS ...] --subject SUBJECT --filename FILENAME
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --noauth              Disable authentication check
+  --username USERNAME   SMTP username
+  --password PASSWORD   SMTP password (required with --username)
+
+required arguments:
+  --host HOST           SMTP hostname
+  --port PORT           SMTP port number
+  --sender SENDER       Sender address (e.g. spoofed@domain.com)
+  --name NAME           Sender name (e.g. John Smith)
+  --recipients RECIPIENTS [RECIPIENTS ...]
+                        Recipient addresses (e.g. victim01@domain.com ...)
+  --subject SUBJECT     Subject line
+  --filename FILENAME   Message body filename (e.g. example-msg.html)
+```
+
+1. Issue the `cli` command along with the appropriate arguments:
+
+> If `--noauth` is not specified, `--username` and `--password` are required.
+
+<img src='https://raw.githubusercontent.com/mikechabot/image-assets/master/email-spoofer-py-cli.png' alt='logo' aria-label='https://github.com/mikechabot/email-spoofer-py-cli' />
