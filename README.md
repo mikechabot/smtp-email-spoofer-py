@@ -73,10 +73,10 @@ $ py spoof.py wizard
 
 ### <a id="cli">CLI</a>
 
-Issue the `cli` command to view the help:
+Issue the `cli -h` command to view the help:
 
 ```bash
-$ py spoof.py cli
+$ py spoof.py cli -h
 usage: spoof.py cli [-h] (--noauth | --username USERNAME)
                     [--password PASSWORD] --host HOST --port PORT --sender
                     SENDER --name NAME --recipients RECIPIENTS
@@ -94,9 +94,9 @@ required arguments:
   --sender SENDER       Sender address (e.g. spoofed@domain.com)
   --name NAME           Sender name (e.g. John Smith)
   --recipients RECIPIENTS [RECIPIENTS ...]
-                        Recipient addresses (e.g. victim01@domain.com ...)
+                        Recipient addresses (e.g. victim@domain.com ...)
   --subject SUBJECT     Subject line
-  --filename FILENAME   Message body filename (e.g. example-msg.html)
+  --filename FILENAME   Message body filename (e.g. example.html)
 ```
 
 1. Issue the `cli` command along with the appropriate arguments:
