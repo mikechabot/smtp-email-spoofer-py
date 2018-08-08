@@ -27,7 +27,7 @@ Python 3.x based email spoofer
 `email-spoofer-py` offers two global commands: [`wizard`](#wizard) and [`cli`](#cli):
 
 ```bash
-$ py spoof.py
+$ py spoof.py -h
 usage: spoof.py [-h] {wizard,cli} ...
 
 Python 3.x based email spoofer
