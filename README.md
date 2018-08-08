@@ -1,4 +1,4 @@
-# email-spoofer-py
+# smtp-email-spoofer-py
 Python 3.x based email spoofer 
 
 > *For educational purposes only. Do not send to or from addresses that you do not own.* 
