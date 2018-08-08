@@ -1,1 +1,0 @@
-from smtpconnection import SMTPConnection

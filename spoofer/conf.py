@@ -1,25 +1,28 @@
 import sys
 import argparse
+from spoofer.commands import cli, wizard
 
 parser = argparse.ArgumentParser(description='Python 3.x based email spoofer', allow_abbrev=False)
 
 # Allowed commands: "wizard" or "cli"
-subparsers = parser.add_subparsers(title='commands', dest='command', help='Allowed commands')
-subparsers.add_parser('wizard', help='Use the step-by-step wizard')
+subparsers = parser.add_subparsers(title='commands', dest='command', help='Allowed commands', required=True)
+wizard_subparser = subparsers.add_parser('wizard', help='Use the step-by-step wizard')
+wizard_subparser.set_defaults(func=wizard.run)
 
-cli = subparsers.add_parser('cli', help='Pass arguments directly')
+cli_subparser = subparsers.add_parser('cli', help='Pass arguments directly')
+cli_subparser.set_defaults(func=cli.run)
 # cli.add_argument('--host', dest='host', required=True, type=str, help='SMTP hostname')
 # cli.add_argument('--port', dest='port', required=True, type=int, help='SMTP port number')
 
 # Mutually exclude "--noauth" and "--username"
-noauth_or_username = cli.add_mutually_exclusive_group(required=True)
+noauth_or_username = cli_subparser.add_mutually_exclusive_group(required=True)
 noauth_or_username.add_argument('--noauth', dest='noauth', action='store_true', help='Disable authentication check')
 noauth_or_username.add_argument('--username', dest='username', type=str, help='SMTP username')
 
 # Make password required if "--username" is present
-cli.add_argument('--password', dest='password', required='--username' in sys.argv, type=str, help='SMTP password (required with --username)')
+cli_subparser.add_argument('--password', dest='password', required='--username' in sys.argv, type=str, help='SMTP password (required with --username)')
 
-required = cli.add_argument_group('required arguments')
+required = cli_subparser.add_argument_group('required arguments')
 required.add_argument('--host', dest='host', required=True, type=str, help='SMTP hostname')
 required.add_argument('--port', dest='port', type=int, required=True, help='SMTP port number')
 

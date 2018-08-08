@@ -1,47 +1,21 @@
 import smtplib
-import logger
 from socket import gaierror
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-COMMASPACE = ', '
+from ..utils import logger
 
 class SMTPConnection:
     def __init__(self, host, port):
-        self._host = host
-        self._port  = port
-        self._socket  = host + ':' + port
-        self._server  = None
-        self._sender = None
-        self._recipients = None
+        self.host = host
+        self.port = port
+        self.socket  = host + ':' + port
+        self.server  = None
+        self.sender = None
+        self.recipients = None
 
         self.__connect()
         self.__start_tls()
         self.__eval_server_features()
-
-    @property
-    def host(self):
-        return self._host
-
-    @property
-    def port(self):
-        return self._port
-
-    @property
-    def server(self):
-        return self._server
-
-    @property
-    def socket(self):
-        return self._socket
-
-    @property
-    def sender(self):
-        return self._sender
-
-    @property
-    def recipients(self):
-        return self._recipients
 
     def __ehlo(self):
         try:
@@ -56,7 +30,7 @@ class SMTPConnection:
     def __connect(self):
         try:
             logger.info('Connecting to SMTP socket (' + self.socket + ')...')
-            self._server = smtplib.SMTP(self.host, self.port)
+            self.server = smtplib.SMTP(self.host, self.port)
         except (gaierror, OSError):
             logger.error('Unable to establish connection to SMTP socket.')
             exit(1)
@@ -102,15 +76,15 @@ class SMTPConnection:
             exit(1)
 
     def compose_message(self, sender, name, recipients, subject, html):
-        self._sender = sender
-        self._recipients = recipients
+        self.sender = sender
+        self.recipients = recipients
 
         message = MIMEMultipart('alternative')
         message.set_charset("utf-8")
 
-        message["From"] = name + "<" + sender + ">"
+        message["From"] = name + "<" +  self.sender + ">"
         message['Subject'] = subject
-        message["To"] = COMMASPACE.join(recipients)
+        message["To"] = ', '.join(self.recipients)
 
         body = MIMEText(html, 'html')
         message.attach(body)

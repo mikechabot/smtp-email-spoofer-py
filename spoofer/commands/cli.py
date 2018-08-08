@@ -1,10 +1,10 @@
-import logger
-from appheader import print_header
-from smtpconnection import SMTPConnection
+from ..utils import logger, appdescription
+from ..models.smtpconnection import SMTPConnection
+from ..utils.userinput import get_yes_no
 
 
 def run(args):
-    print_header()
+    appdescription.print_description()
 
     # Connect to SMTP over TLS
     connection = SMTPConnection(args.host, str(args.port))
@@ -17,9 +17,12 @@ def run(args):
         else:
             exit(1)
 
-    message_body = None
-    with open(args.filename) as f:
-        message_body = f.read()
+    try:
+        with open(args.filename) as f:
+            message_body = f.read()
+    except FileNotFoundError:
+        logger.error("No such file: " + args.filename)
+        exit(1)
 
     # Compose MIME message
     message = connection.compose_message(
@@ -30,5 +33,6 @@ def run(args):
         message_body
     )
 
-    connection.send_mail(message)
+    if get_yes_no('Send message (Y/N)?: ', None):
+        connection.send_mail(message)
 
