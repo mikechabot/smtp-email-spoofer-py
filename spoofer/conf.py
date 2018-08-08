@@ -11,8 +11,6 @@ wizard_subparser.set_defaults(func=wizard.run)
 
 cli_subparser = subparsers.add_parser('cli', help='Pass arguments directly')
 cli_subparser.set_defaults(func=cli.run)
-# cli.add_argument('--host', dest='host', required=True, type=str, help='SMTP hostname')
-# cli.add_argument('--port', dest='port', required=True, type=int, help='SMTP port number')
 
 # Mutually exclude "--noauth" and "--username"
 noauth_or_username = cli_subparser.add_mutually_exclusive_group(required=True)
