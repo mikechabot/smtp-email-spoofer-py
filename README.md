@@ -17,14 +17,14 @@ Python 3.x based email spoofer
 
 ## <a id="getting-started">Getting Started</a>
 
-1. `$ git clone https://github.com/mikechabot/email-spoofer-py.git`
+1. `$ git clone https://github.com/mikechabot/smtp-email-spoofer-py.git`
 3. Activate `virtualenv`
 2. `$ pip install -r requirements.txt`
 3. `$ python spoof.py`
 
 ## <a id="commands">Commands</a>
 
-`email-spoofer-py` offers two global commands: [`wizard`](#wizard) and [`cli`](#cli):
+`smtp-email-spoofer-py` offers two global commands: [`wizard`](#wizard) and [`cli`](#cli):
 
 ```bash
 $ py spoof.py -h
