@@ -22,6 +22,8 @@ Python 3.x based email spoofer
 2. `$ pip install -r requirements.txt`
 3. `$ python spoof.py`
 
+> Instructions on creating and activating `virtualenv` can be found here: https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
+
 ## <a id="commands">Commands</a>
 
 `smtp-email-spoofer-py` offers two global commands: [`wizard`](#wizard) and [`cli`](#cli):
