@@ -1,4 +1,5 @@
 import smtplib
+import traceback
 from socket import gaierror
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -97,4 +98,5 @@ class SMTPConnection:
             logger.success('Message sent!')
         except smtplib.SMTPException:
             logger.error('Unable to send message. Check sender, recipients and message body')
+            logger.error(traceback.format_exc())
             exit(1)

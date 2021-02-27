@@ -39,6 +39,7 @@ def run(args):
 
     recipients = [get_required('Recipient address: ')]
     if get_yes_no('Enter additional recipients (Y/N)?: ', 'n'):
+        recipient = True;
         while recipient:
             recipient = get_optional('Recipient address: ', None)
             if recipient:
