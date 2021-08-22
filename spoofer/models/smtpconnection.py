@@ -6,9 +6,10 @@ from email.mime.text import MIMEText
 from ..utils import logger
 
 class SMTPConnection:
-    def __init__(self, host, port):
+    def __init__(self, host, port, noauth):
         self.host = host
         self.port = port
+        self.noauth = noauth;
         self.socket  = host + ':' + port
         self.server  = None
         self.sender = None
@@ -16,7 +17,9 @@ class SMTPConnection:
 
         self.__connect()
         self.__start_tls()
-        self.__eval_server_features()
+
+        if not noauth:
+            self.__eval_server_features();
 
     def __ehlo(self):
         try:

@@ -7,7 +7,7 @@ def run(args):
     appdescription.print_description()
 
     # Connect to SMTP over TLS
-    connection = SMTPConnection(args.host, str(args.port))
+    connection = SMTPConnection(args.host, str(args.port), args.noauth)
 
     # Attempt login
     if not args.noauth:
